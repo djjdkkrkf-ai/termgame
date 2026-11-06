@@ -1,0 +1,917 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Design System – เว็บเติมเกม</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0b0e1a;
+        --surface: #151a2d;
+        --surface-2: #1e2540;
+        --line: #2a3358;
+        --text: #eef1ff;
+        --muted: #9aa3c7;
+        --primary: #7c3aed;
+        --secondary: #3b82f6;
+        --grad: linear-gradient(135deg, #7c3aed, #3b82f6);
+        --success: #22c55e;
+        --warning: #f59e0b;
+        --danger: #ef4444;
+        --info: #38bdf8;
+        --r-sm: 8px;
+        --r-md: 12px;
+        --r-lg: 16px;
+        --r-pill: 999px;
+        --glow:
+          0 0 0 1px rgba(124, 58, 237, 0.5), 0 8px 28px rgba(124, 58, 237, 0.28);
+        --font: "Prompt", "Kanit", "Noto Sans Thai", system-ui, sans-serif;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font: 400 16px/1.6 var(--font);
+        padding: 0 20px 80px;
+      }
+      .wrap {
+        max-width: 1040px;
+        margin: 0 auto;
+      }
+      header {
+        padding: 56px 0 24px;
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 8px;
+      }
+      h1 {
+        font-size: 2.2rem;
+        font-weight: 700;
+        line-height: 1.25;
+      }
+      header p {
+        color: var(--muted);
+        margin-top: 8px;
+        max-width: 60ch;
+      }
+      section {
+        padding: 40px 0 8px;
+      }
+      h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 6px;
+      }
+      .sub {
+        color: var(--muted);
+        margin-bottom: 20px;
+        font-size: 0.95rem;
+      }
+      h3 {
+        font-size: 1rem;
+        font-weight: 500;
+        color: var(--muted);
+        margin: 22px 0 10px;
+      }
+      .grid {
+        display: grid;
+        gap: 14px;
+      }
+      .g2 {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      }
+      .g3 {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
+      .g6 {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      }
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+      }
+      .panel {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        padding: 20px;
+      }
+      .sw {
+        border-radius: var(--r-md);
+        overflow: hidden;
+        border: 1px solid var(--line);
+        background: var(--surface);
+      }
+      .sw i {
+        display: block;
+        height: 64px;
+      }
+      .sw b {
+        display: block;
+        padding: 8px 12px 0;
+        font-weight: 500;
+        font-size: 0.9rem;
+      }
+      .sw span {
+        display: block;
+        padding: 0 12px 10px;
+        color: var(--muted);
+        font-size: 0.8rem;
+      }
+      .type div {
+        padding: 10px 0;
+        border-bottom: 1px solid var(--line);
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        align-items: baseline;
+      }
+      .type small {
+        color: var(--muted);
+        font-size: 0.78rem;
+        white-space: nowrap;
+      }
+
+      /* buttons */
+      .btn {
+        font: 500 1rem var(--font);
+        border: 0;
+        border-radius: var(--r-md);
+        padding: 12px 22px;
+        cursor: pointer;
+        color: #fff;
+        transition:
+          transform 0.12s,
+          box-shadow 0.2s,
+          background 0.2s;
+      }
+      .btn:active {
+        transform: scale(0.97);
+      }
+      .btn:focus-visible,
+      .input:focus-visible,
+      .chip:focus-visible,
+      .pkg:focus-visible {
+        outline: 2px solid var(--info);
+        outline-offset: 2px;
+      }
+      .btn-primary {
+        background: var(--grad);
+      }
+      .btn-primary:hover {
+        box-shadow: var(--glow);
+      }
+      .btn-buy {
+        background: var(--success);
+        color: #04210f;
+        font-weight: 600;
+      }
+      .btn-buy:hover {
+        box-shadow: 0 8px 24px rgba(34, 197, 94, 0.35);
+      }
+      .btn-outline {
+        background: transparent;
+        border: 1px solid var(--line);
+        color: var(--text);
+      }
+      .btn-outline:hover {
+        border-color: var(--primary);
+        background: var(--surface-2);
+      }
+      .btn-ghost {
+        background: transparent;
+        color: var(--secondary);
+      }
+      .btn-ghost:hover {
+        background: var(--surface-2);
+      }
+      .btn-danger {
+        background: var(--danger);
+      }
+      .btn-sm {
+        padding: 7px 14px;
+        font-size: 0.88rem;
+        border-radius: var(--r-sm);
+      }
+      .btn-lg {
+        padding: 15px 30px;
+        font-size: 1.1rem;
+        width: 100%;
+      }
+      .btn[disabled] {
+        opacity: 0.4;
+        cursor: not-allowed;
+        box-shadow: none;
+      }
+
+      /* inputs */
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .field label {
+        font-size: 0.88rem;
+        color: var(--muted);
+      }
+      .input {
+        font: 400 1rem var(--font);
+        background: var(--bg);
+        color: var(--text);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        padding: 12px 14px;
+        width: 100%;
+      }
+      .input::placeholder {
+        color: #5f688f;
+      }
+      .input:focus {
+        border-color: var(--primary);
+      }
+      .input.err {
+        border-color: var(--danger);
+      }
+      .hint {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .hint.err {
+        color: #fca5a5;
+      }
+      .hint.ok {
+        color: #86efac;
+      }
+      .search {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--r-pill);
+        padding: 4px 6px 4px 18px;
+      }
+      .search input {
+        flex: 1;
+        background: none;
+        border: 0;
+        color: var(--text);
+        font: 400 1rem var(--font);
+        padding: 10px 0;
+        outline: 0;
+      }
+      .search:focus-within {
+        border-color: var(--primary);
+        box-shadow: var(--glow);
+      }
+
+      /* badges / chips */
+      .badge {
+        display: inline-block;
+        font-size: 0.76rem;
+        font-weight: 500;
+        padding: 3px 10px;
+        border-radius: var(--r-pill);
+      }
+      .b-ok {
+        background: rgba(34, 197, 94, 0.15);
+        color: #86efac;
+      }
+      .b-wait {
+        background: rgba(245, 158, 11, 0.15);
+        color: #fcd34d;
+      }
+      .b-fail {
+        background: rgba(239, 68, 68, 0.15);
+        color: #fca5a5;
+      }
+      .b-hot {
+        background: var(--grad);
+        color: #fff;
+      }
+      .b-sale {
+        background: #f43f5e;
+        color: #fff;
+      }
+      .chip {
+        font: 500 0.9rem var(--font);
+        background: var(--surface);
+        color: var(--muted);
+        border: 1px solid var(--line);
+        border-radius: var(--r-pill);
+        padding: 8px 18px;
+        cursor: pointer;
+      }
+      .chip.on {
+        background: var(--grad);
+        color: #fff;
+        border-color: transparent;
+      }
+
+      /* game card */
+      .game {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        overflow: hidden;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+      .game:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--glow);
+      }
+      .cover {
+        aspect-ratio: 4/5;
+        display: flex;
+        align-items: flex-end;
+        padding: 12px;
+        position: relative;
+      }
+      .cover .badge {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+      }
+      .game .meta {
+        padding: 12px 14px 14px;
+      }
+      .game h4 {
+        font-weight: 600;
+        font-size: 1rem;
+      }
+      .game p {
+        color: var(--muted);
+        font-size: 0.82rem;
+        margin-bottom: 10px;
+      }
+
+      /* package */
+      .pkg {
+        background: var(--surface);
+        border: 1.5px solid var(--line);
+        border-radius: var(--r-md);
+        padding: 14px;
+        cursor: pointer;
+        position: relative;
+        text-align: left;
+        color: var(--text);
+        font-family: var(--font);
+      }
+      .pkg:hover {
+        border-color: var(--secondary);
+      }
+      .pkg.sel {
+        border-color: var(--primary);
+        background: var(--surface-2);
+        box-shadow: var(--glow);
+      }
+      .pkg .n {
+        font-weight: 500;
+      }
+      .pkg .p {
+        color: var(--success);
+        font-weight: 600;
+        font-size: 1.15rem;
+      }
+      .pkg s {
+        color: var(--muted);
+        font-size: 0.8rem;
+        margin-left: 6px;
+      }
+      .pkg .badge {
+        position: absolute;
+        top: -9px;
+        right: 10px;
+      }
+
+      /* summary + table + alerts */
+      .sum dl {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 8px 16px;
+        margin-bottom: 14px;
+      }
+      .sum dt {
+        color: var(--muted);
+      }
+      .sum dd {
+        text-align: right;
+      }
+      .total {
+        display: flex;
+        justify-content: space-between;
+        border-top: 1px dashed var(--line);
+        padding-top: 12px;
+        margin-bottom: 14px;
+        font-weight: 600;
+        font-size: 1.15rem;
+      }
+      .total span:last-child {
+        color: var(--success);
+      }
+      .tbl {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.92rem;
+      }
+      .tbl th {
+        text-align: left;
+        color: var(--muted);
+        font-weight: 500;
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--line);
+      }
+      .tbl td {
+        padding: 12px;
+        border-bottom: 1px solid var(--line);
+      }
+      .scroll {
+        overflow-x: auto;
+      }
+      .toast {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        padding: 12px 16px;
+        border-radius: var(--r-md);
+        border: 1px solid;
+        font-size: 0.92rem;
+      }
+      .t-ok {
+        background: rgba(34, 197, 94, 0.1);
+        border-color: rgba(34, 197, 94, 0.4);
+      }
+      .t-err {
+        background: rgba(239, 68, 68, 0.1);
+        border-color: rgba(239, 68, 68, 0.4);
+      }
+      .t-info {
+        background: rgba(56, 189, 248, 0.1);
+        border-color: rgba(56, 189, 248, 0.4);
+      }
+      .empty {
+        text-align: center;
+        padding: 32px 16px;
+        color: var(--muted);
+      }
+      .empty b {
+        display: block;
+        color: var(--text);
+        font-size: 1.05rem;
+        margin-bottom: 4px;
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        padding: 12px 18px;
+        flex-wrap: wrap;
+      }
+      .logo {
+        font-weight: 700;
+        font-size: 1.2rem;
+        background: var(--grad);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .nav a {
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.92rem;
+      }
+      .nav a:hover,
+      .nav a.on {
+        color: var(--text);
+      }
+      .wallet {
+        margin-left: auto;
+        background: var(--surface-2);
+        border-radius: var(--r-pill);
+        padding: 6px 14px;
+        font-weight: 500;
+        font-size: 0.9rem;
+      }
+      .skel {
+        height: 14px;
+        border-radius: 6px;
+        background: linear-gradient(
+          90deg,
+          var(--surface-2),
+          var(--line),
+          var(--surface-2)
+        );
+        background-size: 200% 100%;
+        animation: sh 1.4s infinite;
+      }
+      @keyframes sh {
+        to {
+          background-position: -200% 0;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation: none !important;
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <h1>Design System: เว็บเติมเกม</h1>
+        <p>
+          ชุดสี ตัวอักษร และคอมโพเนนต์สำหรับหน้า Login, สมัครสมาชิก, เลือกเกม,
+          เติมเงิน และโปรไฟล์ ใช้โทเคนใน :root ร่วมกันทุกหน้า
+        </p>
+      </header>
+
+      <section>
+        <h2>สี</h2>
+        <p class="sub">
+          พื้นหลังมืด เน้นปุ่มหลักด้วยไล่สีม่วง–น้ำเงิน
+          และใช้สีเขียวกับราคาและปุ่มซื้อเท่านั้น
+        </p>
+        <div class="grid g6">
+          <div class="sw">
+            <i style="background: #0b0e1a"></i><b>Background</b
+            ><span>#0B0E1A</span>
+          </div>
+          <div class="sw">
+            <i style="background: #151a2d"></i><b>Surface</b
+            ><span>#151A2D</span>
+          </div>
+          <div class="sw">
+            <i style="background: #1e2540"></i><b>Surface 2</b
+            ><span>#1E2540</span>
+          </div>
+          <div class="sw">
+            <i style="background: #2a3358"></i><b>Line</b><span>#2A3358</span>
+          </div>
+          <div class="sw">
+            <i style="background: #7c3aed"></i><b>Primary</b
+            ><span>#7C3AED</span>
+          </div>
+          <div class="sw">
+            <i style="background: #3b82f6"></i><b>Secondary</b
+            ><span>#3B82F6</span>
+          </div>
+          <div class="sw">
+            <i style="background: linear-gradient(135deg, #7c3aed, #3b82f6)"></i
+            ><b>Gradient</b><span>ปุ่มหลัก, ป้าย</span>
+          </div>
+          <div class="sw">
+            <i style="background: #22c55e"></i><b>Success / ราคา</b
+            ><span>#22C55E</span>
+          </div>
+          <div class="sw">
+            <i style="background: #f59e0b"></i><b>Warning</b
+            ><span>#F59E0B</span>
+          </div>
+          <div class="sw">
+            <i style="background: #ef4444"></i><b>Danger</b><span>#EF4444</span>
+          </div>
+          <div class="sw">
+            <i style="background: #9aa3c7"></i><b>Text muted</b
+            ><span>#9AA3C7</span>
+          </div>
+          <div class="sw">
+            <i style="background: #eef1ff"></i><b>Text</b><span>#EEF1FF</span>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>ตัวอักษร</h2>
+        <p class="sub">
+          ฟอนต์ Prompt (รองรับภาษาไทย) สำรองด้วย Kanit และ Noto Sans Thai
+        </p>
+        <div class="panel type">
+          <div>
+            <span style="font-size: 2.2rem; font-weight: 700"
+              >เติมเกมไว ปลอดภัย</span
+            ><small>H1 · 35px · 700</small>
+          </div>
+          <div>
+            <span style="font-size: 1.5rem; font-weight: 600">เกมยอดนิยม</span
+            ><small>H2 · 24px · 600</small>
+          </div>
+          <div>
+            <span style="font-size: 1.1rem; font-weight: 500"
+              >Free Fire 100 Diamonds</span
+            ><small>H3 · 18px · 500</small>
+          </div>
+          <div>
+            <span>กรอก Player ID แล้วเลือกแพ็กเกจที่ต้องการ</span
+            ><small>Body · 16px · 400</small>
+          </div>
+          <div>
+            <span style="color: var(--muted); font-size: 0.85rem"
+              >ระบบจะเติมเข้าบัญชีภายใน 1–3 นาที</span
+            ><small>Caption · 13px · 400</small>
+          </div>
+          <div>
+            <span
+              style="
+                color: var(--success);
+                font-size: 1.15rem;
+                font-weight: 600;
+              "
+              >฿ 89.00</span
+            ><small>ราคา · 18px · 600 · เขียว</small>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>ปุ่ม</h2>
+        <p class="sub">
+          แต่ละหน้ามีปุ่มหลักได้ 1 ปุ่ม ปุ่มซื้อ/ชำระเงินใช้สีเขียว
+        </p>
+        <div class="panel">
+          <div class="row">
+            <button class="btn btn-primary">เข้าสู่ระบบ</button>
+            <button class="btn btn-buy">ซื้อเลย</button>
+            <button class="btn btn-outline">ยกเลิก</button>
+            <button class="btn btn-ghost">ลืมรหัสผ่าน?</button>
+            <button class="btn btn-danger">ลบ ID นี้</button>
+            <button class="btn btn-primary" disabled>กำลังตรวจสอบ…</button>
+          </div>
+          <h3>ขนาด</h3>
+          <div class="row">
+            <button class="btn btn-primary btn-sm">เติมเลย</button>
+            <button class="btn btn-primary">เติมเงิน</button>
+          </div>
+          <div style="margin-top: 12px">
+            <button class="btn btn-buy btn-lg">ชำระเงิน ฿89.00</button>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>ฟอร์ม</h2>
+        <p class="sub">ข้อความแจ้งผลบอกสาเหตุและวิธีแก้ ไม่ใช้คำขอโทษลอย ๆ</p>
+        <div class="grid g2">
+          <div class="panel grid" style="gap: 16px">
+            <div class="field">
+              <label for="u">ชื่อผู้ใช้</label
+              ><input id="u" class="input" placeholder="เช่น gamer_01" />
+            </div>
+            <div class="field">
+              <label for="p">รหัสผ่าน</label
+              ><input
+                id="p"
+                class="input err"
+                type="password"
+                value="1234"
+              /><span class="hint err">รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร</span>
+            </div>
+            <div class="field">
+              <label for="g">Player ID</label
+              ><input id="g" class="input" value="1234567890" /><span
+                class="hint ok"
+                >พบบัญชี: NightFox99</span
+              >
+            </div>
+            <label class="row" style="font-size: 0.9rem; color: var(--muted)"
+              ><input type="checkbox" checked />
+              ฉันยอมรับข้อกำหนดการใช้งาน</label
+            >
+          </div>
+          <div class="panel grid" style="gap: 16px; align-content: start">
+            <div class="field">
+              <label>ค้นหาเกม</label>
+              <div class="search">
+                <span>🔍</span
+                ><input placeholder="ค้นหาเกม เช่น ROV, Free Fire" /><button
+                  class="btn btn-primary btn-sm"
+                >
+                  ค้นหา
+                </button>
+              </div>
+            </div>
+            <div class="field">
+              <label>หมวดหมู่</label>
+              <div class="row">
+                <button class="chip on">ทั้งหมด</button
+                ><button class="chip">มือถือ</button
+                ><button class="chip">PC</button
+                ><button class="chip">Gift Card</button>
+              </div>
+            </div>
+            <div class="field">
+              <label>ช่องทางชำระเงิน</label>
+              <select class="input">
+                <option>PromptPay QR</option>
+                <option>TrueMoney Wallet</option>
+                <option>โอนผ่านธนาคาร</option>
+                <option>เครดิตในเว็บ</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>การ์ดเกมและแพ็กเกจ</h2>
+        <p class="sub">
+          การ์ดเกมใช้ภาพปกแนวตั้ง 4:5 ส่วนแพ็กเกจแสดงชื่อไอเทมและราคาเด่นที่สุด
+        </p>
+        <div class="grid g6">
+          <div class="game">
+            <div
+              class="cover"
+              style="background: linear-gradient(160deg, #7c3aed, #1e2540)"
+            >
+              <span class="badge b-hot">ยอดนิยม</span>
+            </div>
+            <div class="meta">
+              <h4>Free Fire</h4>
+              <p>Diamonds</p>
+              <button class="btn btn-primary btn-sm" style="width: 100%">
+                เติมเลย
+              </button>
+            </div>
+          </div>
+          <div class="game">
+            <div
+              class="cover"
+              style="background: linear-gradient(160deg, #3b82f6, #1e2540)"
+            >
+              <span class="badge b-sale">ลด 10%</span>
+            </div>
+            <div class="meta">
+              <h4>ROV</h4>
+              <p>คูปอง</p>
+              <button class="btn btn-primary btn-sm" style="width: 100%">
+                เติมเลย
+              </button>
+            </div>
+          </div>
+          <div class="game">
+            <div
+              class="cover"
+              style="background: linear-gradient(160deg, #0ea5e9, #1e2540)"
+            ></div>
+            <div class="meta">
+              <h4>Genshin Impact</h4>
+              <p>Genesis Crystal</p>
+              <button class="btn btn-primary btn-sm" style="width: 100%">
+                เติมเลย
+              </button>
+            </div>
+          </div>
+        </div>
+        <h3>เลือกแพ็กเกจ</h3>
+        <div class="grid g6">
+          <button class="pkg">
+            <div class="n">100 Diamonds</div>
+            <div class="p">฿35</div>
+          </button>
+          <button class="pkg sel">
+            <span class="badge b-hot">ขายดี</span>
+            <div class="n">310 Diamonds</div>
+            <div class="p">฿89<s>฿100</s></div>
+          </button>
+          <button class="pkg">
+            <div class="n">520 Diamonds</div>
+            <div class="p">฿149</div>
+          </button>
+          <button class="pkg">
+            <span class="badge b-sale">ลด 5%</span>
+            <div class="n">1,060 Diamonds</div>
+            <div class="p">฿285<s>฿300</s></div>
+          </button>
+        </div>
+      </section>
+
+      <section>
+        <h2>สรุปคำสั่งซื้อ</h2>
+        <div class="grid g2">
+          <div class="panel sum">
+            <dl>
+              <dt>เกม</dt>
+              <dd>Free Fire</dd>
+              <dt>Player ID</dt>
+              <dd>1234567890</dd>
+              <dt>แพ็กเกจ</dt>
+              <dd>310 Diamonds</dd>
+              <dt>ส่วนลด</dt>
+              <dd>-฿11.00</dd>
+            </dl>
+            <div class="total"><span>ยอดชำระ</span><span>฿89.00</span></div>
+            <button class="btn btn-buy btn-lg">ซื้อเลย</button>
+          </div>
+          <div class="panel">
+            <div
+              class="row"
+              style="justify-content: space-between; margin-bottom: 12px"
+            >
+              <b>เครดิตในบัญชี</b
+              ><span class="badge b-ok">ยืนยันตัวตนแล้ว</span>
+            </div>
+            <div
+              style="font-size: 2rem; font-weight: 700; color: var(--success)"
+            >
+              ฿ 1,250.00
+            </div>
+            <div class="row" style="margin: 14px 0">
+              <button class="chip">฿50</button><button class="chip">฿100</button
+              ><button class="chip on">฿300</button
+              ><button class="chip">฿500</button
+              ><button class="chip">฿1,000</button>
+            </div>
+            <button class="btn btn-primary" style="width: 100%">
+              เติมเงินเข้าบัญชี
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>ตาราง ประวัติ และสถานะ</h2>
+        <div class="panel scroll">
+          <table class="tbl">
+            <tr>
+              <th>เลขที่</th>
+              <th>เกม</th>
+              <th>แพ็กเกจ</th>
+              <th>ราคา</th>
+              <th>สถานะ</th>
+            </tr>
+            <tr>
+              <td>#A10241</td>
+              <td>Free Fire</td>
+              <td>310 Diamonds</td>
+              <td>฿89</td>
+              <td><span class="badge b-ok">สำเร็จ</span></td>
+            </tr>
+            <tr>
+              <td>#A10238</td>
+              <td>ROV</td>
+              <td>400 คูปอง</td>
+              <td>฿150</td>
+              <td><span class="badge b-wait">รอชำระเงิน</span></td>
+            </tr>
+            <tr>
+              <td>#A10230</td>
+              <td>Genshin Impact</td>
+              <td>980 Crystal</td>
+              <td>฿549</td>
+              <td><span class="badge b-fail">ยกเลิก</span></td>
+            </tr>
+          </table>
+        </div>
+      </section>
+
+      <section>
+        <h2>แจ้งเตือนและสถานะว่าง</h2>
+        <div class="grid" style="gap: 10px">
+          <div class="toast t-ok">
+            เติมเกมสำเร็จ: 310 Diamonds เข้าบัญชี NightFox99 แล้ว
+          </div>
+          <div class="toast t-err">
+            ไม่พบ Player ID นี้ ตรวจสอบตัวเลขแล้วลองใหม่
+          </div>
+          <div class="toast t-info">
+            QR หมดอายุใน 14:59 นาที กรุณาชำระก่อนหมดเวลา
+          </div>
+        </div>
+        <div class="grid g2" style="margin-top: 14px">
+          <div class="panel empty">
+            <b>ไม่พบเกมที่ค้นหา</b>ลองใช้ชื่ออื่น หรือเลือกจากหมวดหมู่ด้านบน
+          </div>
+          <div class="panel grid" style="gap: 12px">
+            <div class="skel" style="width: 60%"></div>
+            <div class="skel"></div>
+            <div class="skel" style="width: 80%"></div>
+            <span class="hint">สถานะกำลังโหลด</span>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>แถบนำทาง</h2>
+        <div class="nav">
+          <span class="logo">TOPUP</span><a class="on" href="#">หน้าแรก</a
+          ><a href="#">เกมทั้งหมด</a><a href="#">เติมเงิน</a
+          ><a href="#">ประวัติ</a><span class="wallet">฿ 1,250.00</span>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

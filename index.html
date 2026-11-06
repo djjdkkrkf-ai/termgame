@@ -1,0 +1,1550 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TOPUP – เติมเกมไว ปลอดภัย</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0b0e1a;
+        --surface: #151a2d;
+        --surface-2: #1e2540;
+        --line: #2a3358;
+        --text: #eef1ff;
+        --muted: #9aa3c7;
+        --primary: #7c3aed;
+        --secondary: #3b82f6;
+        --grad: linear-gradient(135deg, #7c3aed, #3b82f6);
+        --success: #22c55e;
+        --warning: #f59e0b;
+        --danger: #ef4444;
+        --info: #38bdf8;
+        --r-sm: 8px;
+        --r-md: 12px;
+        --r-lg: 16px;
+        --glow:
+          0 0 0 1px rgba(124, 58, 237, 0.5), 0 8px 28px rgba(124, 58, 237, 0.28);
+        --font: "Prompt", "Kanit", "Noto Sans Thai", system-ui, sans-serif;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font: 400 16px/1.6 var(--font);
+        min-height: 100vh;
+        padding-bottom: 70px;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      .wrap {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 18px;
+      }
+      h1 {
+        font-size: 1.9rem;
+        line-height: 1.3;
+      }
+      h2 {
+        font-size: 1.35rem;
+        font-weight: 600;
+        margin: 32px 0 14px;
+      }
+      h3 {
+        font-size: 1.05rem;
+        font-weight: 500;
+      }
+      .muted {
+        color: var(--muted);
+      }
+      .sm {
+        font-size: 0.85rem;
+      }
+      .btn {
+        font: 500 1rem var(--font);
+        border: 0;
+        border-radius: var(--r-md);
+        padding: 11px 20px;
+        cursor: pointer;
+        color: #fff;
+        display: inline-block;
+        text-align: center;
+        transition:
+          transform 0.12s,
+          box-shadow 0.2s;
+      }
+      .btn:active {
+        transform: scale(0.97);
+      }
+      .btn:focus-visible,
+      .input:focus-visible,
+      .chip:focus-visible,
+      .pkg:focus-visible,
+      a:focus-visible {
+        outline: 2px solid var(--info);
+        outline-offset: 2px;
+      }
+      .btn-primary {
+        background: var(--grad);
+      }
+      .btn-primary:hover {
+        box-shadow: var(--glow);
+      }
+      .btn-buy {
+        background: var(--success);
+        color: #04210f;
+        font-weight: 600;
+      }
+      .btn-buy:hover {
+        box-shadow: 0 8px 24px rgba(34, 197, 94, 0.35);
+      }
+      .btn-outline {
+        background: transparent;
+        border: 1px solid var(--line);
+        color: var(--text);
+      }
+      .btn-outline:hover {
+        border-color: var(--primary);
+      }
+      .btn-ghost {
+        background: none;
+        color: var(--secondary);
+        padding: 6px 8px;
+      }
+      .btn-sm {
+        padding: 6px 14px;
+        font-size: 0.88rem;
+        border-radius: var(--r-sm);
+      }
+      .btn-lg {
+        width: 100%;
+        padding: 14px;
+        font-size: 1.05rem;
+      }
+      .block {
+        width: 100%;
+      }
+      .btn[disabled] {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-bottom: 14px;
+      }
+      .field label {
+        font-size: 0.88rem;
+        color: var(--muted);
+      }
+      .input {
+        font: 400 1rem var(--font);
+        background: var(--bg);
+        color: var(--text);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        padding: 11px 14px;
+        width: 100%;
+      }
+      .input:focus {
+        border-color: var(--primary);
+        outline: 0;
+      }
+      .input.err {
+        border-color: var(--danger);
+      }
+      .hint {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .hint.err {
+        color: #fca5a5;
+      }
+      .hint.ok {
+        color: #86efac;
+      }
+      .panel {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        padding: 20px;
+      }
+      .badge {
+        display: inline-block;
+        font-size: 0.75rem;
+        font-weight: 500;
+        padding: 2px 10px;
+        border-radius: 99px;
+      }
+      .b-ok {
+        background: rgba(34, 197, 94, 0.15);
+        color: #86efac;
+      }
+      .b-wait {
+        background: rgba(245, 158, 11, 0.15);
+        color: #fcd34d;
+      }
+      .b-fail {
+        background: rgba(239, 68, 68, 0.15);
+        color: #fca5a5;
+      }
+      .b-hot {
+        background: var(--grad);
+        color: #fff;
+      }
+      .b-sale {
+        background: #f43f5e;
+        color: #fff;
+      }
+      .chip {
+        font: 500 0.9rem var(--font);
+        background: var(--surface);
+        color: var(--muted);
+        border: 1px solid var(--line);
+        border-radius: 99px;
+        padding: 7px 16px;
+        cursor: pointer;
+      }
+      .chip.on {
+        background: var(--grad);
+        color: #fff;
+        border-color: transparent;
+      }
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+      }
+      .between {
+        justify-content: space-between;
+      }
+      .grid {
+        display: grid;
+        gap: 14px;
+      }
+      .ggames {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      }
+      .g3 {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      }
+      /* nav */
+      .top {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        background: rgba(11, 14, 26, 0.92);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--line);
+      }
+      .top .wrap {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        height: 64px;
+      }
+      .logo {
+        font-weight: 700;
+        font-size: 1.3rem;
+        background: var(--grad);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .links {
+        display: flex;
+        gap: 18px;
+      }
+      .links a {
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+      .links a:hover,
+      .links a.on {
+        color: var(--text);
+      }
+      .search {
+        flex: 1;
+        max-width: 340px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 99px;
+        padding: 0 14px;
+      }
+      .search input {
+        flex: 1;
+        background: none;
+        border: 0;
+        color: var(--text);
+        font: 400 0.95rem var(--font);
+        padding: 9px 0;
+        outline: 0;
+        min-width: 0;
+      }
+      .search:focus-within {
+        border-color: var(--primary);
+      }
+      .wallet {
+        background: var(--surface-2);
+        border-radius: 99px;
+        padding: 5px 14px;
+        font-weight: 500;
+        font-size: 0.9rem;
+        white-space: nowrap;
+      }
+      .menu {
+        position: relative;
+      }
+      .dd {
+        display: none;
+        position: absolute;
+        right: 0;
+        top: 44px;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        min-width: 170px;
+        padding: 6px;
+      }
+      .menu.open .dd {
+        display: block;
+      }
+      .dd a,
+      .dd button {
+        display: block;
+        width: 100%;
+        text-align: left;
+        padding: 9px 12px;
+        border-radius: 8px;
+        background: none;
+        border: 0;
+        color: var(--text);
+        font: inherit;
+        cursor: pointer;
+      }
+      .dd a:hover,
+      .dd button:hover {
+        background: var(--surface-2);
+      }
+      .avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: var(--grad);
+        display: grid;
+        place-items: center;
+        font-weight: 600;
+        border: 0;
+        color: #fff;
+        cursor: pointer;
+        font-family: var(--font);
+      }
+      .tabbar {
+        display: none;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: var(--surface);
+        border-top: 1px solid var(--line);
+        z-index: 20;
+      }
+      .tabbar a {
+        flex: 1;
+        text-align: center;
+        padding: 8px 0 10px;
+        font-size: 0.72rem;
+        color: var(--muted);
+      }
+      .tabbar a span {
+        display: block;
+        font-size: 1.2rem;
+      }
+      .tabbar a.on {
+        color: var(--text);
+      }
+      /* hero */
+      .hero {
+        position: relative;
+        border-radius: var(--r-lg);
+        overflow: hidden;
+        margin-top: 20px;
+        min-height: 200px;
+      }
+      .slide {
+        display: none;
+        padding: 36px 32px;
+        min-height: 200px;
+        align-content: center;
+      }
+      .slide.on {
+        display: grid;
+      }
+      .slide h1 {
+        max-width: 18ch;
+      }
+      .slide p {
+        margin: 8px 0 16px;
+        max-width: 44ch;
+        opacity: 0.9;
+      }
+      .dots {
+        position: absolute;
+        bottom: 12px;
+        right: 16px;
+        display: flex;
+        gap: 6px;
+      }
+      .dots button {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        border: 0;
+        background: rgba(255, 255, 255, 0.35);
+        cursor: pointer;
+      }
+      .dots .on {
+        background: #fff;
+      }
+      .trust {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 12px;
+        margin-top: 16px;
+      }
+      .trust div {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        padding: 12px 14px;
+        font-size: 0.9rem;
+      }
+      .ticker {
+        margin-top: 14px;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 99px;
+        padding: 8px 18px;
+        font-size: 0.88rem;
+        color: var(--muted);
+      }
+      .ticker b {
+        color: var(--success);
+        font-weight: 500;
+      }
+      /* game card */
+      .game {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        overflow: hidden;
+        display: block;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+      .game:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--glow);
+      }
+      .cover {
+        aspect-ratio: 4/5;
+        display: grid;
+        place-items: center;
+        font-size: 3.4rem;
+        position: relative;
+      }
+      .cover .badge {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        font-size: 0.72rem;
+      }
+      .game .meta {
+        padding: 10px 12px 12px;
+      }
+      .game h4 {
+        font-weight: 600;
+        font-size: 0.95rem;
+      }
+      .game p {
+        color: var(--muted);
+        font-size: 0.8rem;
+        margin-bottom: 8px;
+      }
+      .search-big {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+      }
+      /* game detail */
+      .layout {
+        display: grid;
+        grid-template-columns: 1fr 340px;
+        gap: 20px;
+        align-items: start;
+      }
+      .sticky {
+        position: sticky;
+        top: 80px;
+      }
+      .gh {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        padding: 20px;
+        border-radius: var(--r-lg);
+        margin-top: 20px;
+      }
+      .gh .ic {
+        font-size: 3rem;
+        width: 84px;
+        height: 84px;
+        border-radius: var(--r-md);
+        background: rgba(0, 0, 0, 0.3);
+        display: grid;
+        place-items: center;
+      }
+      .step {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 22px 0 12px;
+        font-weight: 600;
+      }
+      .step i {
+        font-style: normal;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: var(--grad);
+        display: grid;
+        place-items: center;
+        font-size: 0.85rem;
+      }
+      .pkgs {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 12px;
+      }
+      .pkg {
+        background: var(--surface);
+        border: 1.5px solid var(--line);
+        border-radius: var(--r-md);
+        padding: 14px;
+        cursor: pointer;
+        position: relative;
+        text-align: left;
+        color: var(--text);
+        font-family: var(--font);
+      }
+      .pkg:hover {
+        border-color: var(--secondary);
+      }
+      .pkg.sel {
+        border-color: var(--primary);
+        background: var(--surface-2);
+        box-shadow: var(--glow);
+      }
+      .pkg .p {
+        color: var(--success);
+        font-weight: 600;
+        font-size: 1.1rem;
+      }
+      .pkg s {
+        color: var(--muted);
+        font-size: 0.78rem;
+        margin-left: 6px;
+      }
+      .pkg .badge {
+        position: absolute;
+        top: -9px;
+        right: 10px;
+      }
+      .pays {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 10px;
+      }
+      .sum dl {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 6px 14px;
+        margin: 12px 0;
+      }
+      .sum dt {
+        color: var(--muted);
+      }
+      .sum dd {
+        text-align: right;
+        word-break: break-all;
+      }
+      .total {
+        display: flex;
+        justify-content: space-between;
+        border-top: 1px dashed var(--line);
+        padding-top: 12px;
+        margin-bottom: 14px;
+        font-weight: 600;
+        font-size: 1.15rem;
+      }
+      .total span:last-child {
+        color: var(--success);
+      }
+      .tabs {
+        display: flex;
+        gap: 6px;
+        border-bottom: 1px solid var(--line);
+        margin: 24px 0 14px;
+        overflow-x: auto;
+      }
+      .tabs button {
+        background: none;
+        border: 0;
+        color: var(--muted);
+        font: 500 0.95rem var(--font);
+        padding: 10px 14px;
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+        white-space: nowrap;
+      }
+      .tabs .on {
+        color: var(--text);
+        border-color: var(--primary);
+      }
+      /* tables, misc */
+      .scroll {
+        overflow-x: auto;
+      }
+      .tbl {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+      }
+      .tbl th {
+        text-align: left;
+        color: var(--muted);
+        font-weight: 500;
+        padding: 10px;
+        border-bottom: 1px solid var(--line);
+      }
+      .tbl td {
+        padding: 11px 10px;
+        border-bottom: 1px solid var(--line);
+        white-space: nowrap;
+      }
+      .empty {
+        text-align: center;
+        padding: 32px 12px;
+        color: var(--muted);
+      }
+      .empty b {
+        display: block;
+        color: var(--text);
+        margin-bottom: 4px;
+      }
+      .narrow {
+        max-width: 430px;
+        margin: 40px auto;
+      }
+      .or {
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.85rem;
+        margin: 14px 0;
+      }
+      .qr {
+        width: 200px;
+        height: 200px;
+        margin: 12px auto;
+        border-radius: var(--r-md);
+        background: #fff;
+        padding: 12px;
+        display: grid;
+        grid-template-columns: repeat(15, 1fr);
+        gap: 0;
+      }
+      .qr i {
+        background: #111;
+      }
+      .qr i.w {
+        background: #fff;
+      }
+      .center {
+        text-align: center;
+      }
+      .big {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--success);
+      }
+      details {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        padding: 12px 16px;
+        margin-bottom: 10px;
+      }
+      summary {
+        cursor: pointer;
+        font-weight: 500;
+      }
+      details p {
+        margin-top: 8px;
+        color: var(--muted);
+      }
+      #toasts {
+        position: fixed;
+        top: 76px;
+        right: 16px;
+        z-index: 50;
+        display: grid;
+        gap: 8px;
+        max-width: 340px;
+      }
+      .toast {
+        padding: 12px 16px;
+        border-radius: var(--r-md);
+        border: 1px solid;
+        font-size: 0.9rem;
+        background: var(--surface);
+      }
+      .t-ok {
+        border-color: rgba(34, 197, 94, 0.5);
+      }
+      .t-err {
+        border-color: rgba(239, 68, 68, 0.5);
+      }
+      .t-info {
+        border-color: rgba(56, 189, 248, 0.5);
+      }
+      footer {
+        margin-top: 56px;
+        border-top: 1px solid var(--line);
+        padding: 28px 0;
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+      footer .row {
+        gap: 20px;
+      }
+      @media (max-width: 760px) {
+        .links,
+        .top .wallet.hide-m {
+          display: none;
+        }
+        .tabbar {
+          display: flex;
+        }
+        .layout {
+          grid-template-columns: 1fr;
+        }
+        .sticky {
+          position: static;
+        }
+        .top .wrap {
+          gap: 10px;
+        }
+        .slide {
+          padding: 26px 20px;
+        }
+        h1 {
+          font-size: 1.5rem;
+        }
+        .logo {
+          font-size: 1.1rem;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="top"><div class="wrap" id="nav"></div></header>
+    <div id="toasts"></div>
+    <main class="wrap" id="app"></main>
+    <footer>
+      <div class="wrap">
+        <div class="row between">
+          <span class="logo">TOPUP</span>
+          <div class="row">
+            <span>LINE: @topup</span><span>Facebook: TOPUP Thailand</span
+            ><span>PromptPay · TrueMoney · โอนธนาคาร</span>
+          </div>
+        </div>
+        <p class="sm" style="margin-top: 12px">
+          ข้อกำหนดการใช้งาน · นโยบายความเป็นส่วนตัว · © 2026 TOPUP
+          (ต้นแบบเพื่อการออกแบบ)
+        </p>
+      </div>
+    </footer>
+    <nav class="tabbar" id="tabs"></nav>
+
+    <script>
+      const G = [
+        {
+          id: "freefire",
+          n: "Free Fire",
+          cat: "mobile",
+          u: "Diamonds",
+          e: "🔥",
+          c: ["#F97316", "#7C2D12"],
+          hot: 1,
+          idl: "Player ID",
+          pk: [
+            ["100", 35],
+            ["310", 89, 100],
+            ["520", 149],
+            ["1,060", 285, 300],
+            ["2,180", 579],
+          ],
+        },
+        {
+          id: "rov",
+          n: "ROV",
+          cat: "mobile",
+          u: "คูปอง",
+          e: "⚔️",
+          c: ["#3B82F6", "#1E3A8A"],
+          hot: 1,
+          idl: "Player ID",
+          pk: [
+            ["40", 30],
+            ["90", 60],
+            ["400", 250],
+            ["950", 590, 620],
+            ["2,000", 1190],
+          ],
+        },
+        {
+          id: "genshin",
+          n: "Genshin Impact",
+          cat: "mobile",
+          u: "Genesis Crystal",
+          e: "🌸",
+          c: ["#0EA5E9", "#312E81"],
+          hot: 1,
+          idl: "UID",
+          sv: ["Asia", "America", "Europe", "TW/HK/MO"],
+          pk: [
+            ["60", 35],
+            ["330", 179],
+            ["1,090", 549],
+            ["2,240", 1099, 1150],
+            ["3,880", 1799],
+          ],
+        },
+        {
+          id: "pubg",
+          n: "PUBG Mobile",
+          cat: "mobile",
+          u: "UC",
+          e: "🎯",
+          c: ["#F59E0B", "#78350F"],
+          idl: "Character ID",
+          pk: [
+            ["60", 35],
+            ["325", 179],
+            ["660", 349],
+            ["1,800", 899, 950],
+          ],
+        },
+        {
+          id: "mlbb",
+          n: "Mobile Legends",
+          cat: "mobile",
+          u: "Diamonds",
+          e: "🛡️",
+          c: ["#6366F1", "#1E1B4B"],
+          new: 1,
+          idl: "User ID",
+          sv: ["Zone ID"],
+          pk: [
+            ["86", 65],
+            ["172", 130],
+            ["429", 320],
+            ["878", 640, 680],
+          ],
+        },
+        {
+          id: "valorant",
+          n: "Valorant",
+          cat: "pc",
+          u: "VP",
+          e: "🔫",
+          c: ["#EF4444", "#450A0A"],
+          new: 1,
+          idl: "Riot ID",
+          pk: [
+            ["475", 149],
+            ["1,000", 299],
+            ["2,050", 599],
+            ["3,650", 999, 1050],
+          ],
+        },
+        {
+          id: "roblox",
+          n: "Roblox",
+          cat: "pc",
+          u: "Robux",
+          e: "🧱",
+          c: ["#14B8A6", "#134E4A"],
+          idl: "Username",
+          pk: [
+            ["400", 169],
+            ["800", 329],
+            ["1,700", 649],
+            ["4,500", 1649, 1700],
+          ],
+        },
+        {
+          id: "steam",
+          n: "Steam Wallet",
+          cat: "gift",
+          u: "บาท",
+          e: "💨",
+          c: ["#475569", "#0F172A"],
+          idl: "อีเมลรับรหัส",
+          pk: [
+            ["100", 105],
+            ["300", 310],
+            ["500", 515],
+            ["1,000", 1020],
+          ],
+        },
+        {
+          id: "netflix",
+          n: "Netflix Gift Card",
+          cat: "app",
+          u: "บาท",
+          e: "🎬",
+          c: ["#DC2626", "#1C1917"],
+          new: 1,
+          idl: "อีเมลรับรหัส",
+          pk: [
+            ["300", 300],
+            ["500", 500],
+            ["1,000", 1000],
+          ],
+        },
+      ];
+      const CATS = [
+        ["all", "ทั้งหมด"],
+        ["mobile", "มือถือ"],
+        ["pc", "PC"],
+        ["gift", "Gift Card"],
+        ["app", "โปรแกรม/สตรีมมิ่ง"],
+      ];
+      const PAY = [
+        ["wallet", "เครดิตเงินในเว็บ", "💰"],
+        ["promptpay", "PromptPay QR", "📱"],
+        ["truemoney", "TrueMoney Wallet", "🟠"],
+        ["bank", "โอนผ่านธนาคาร", "🏦"],
+      ];
+      const S = {
+        user: null,
+        bal: 1250,
+        orders: [
+          {
+            id: "A10241",
+            g: "Free Fire",
+            p: "310 Diamonds",
+            t: 89,
+            s: "ok",
+            d: "02/11/2026",
+          },
+          {
+            id: "A10230",
+            g: "ROV",
+            p: "90 คูปอง",
+            t: 60,
+            s: "fail",
+            d: "28/10/2026",
+          },
+        ],
+        tops: [{ d: "01/11/2026", a: 500, m: "PromptPay QR", s: "ok" }],
+        ids: [["Free Fire", "1234567890"]],
+        cart: null,
+        gs: {},
+        pf: "info",
+      };
+      const $ = (s) => document.querySelector(s),
+        gid = (i) => G.find((g) => g.id === i),
+        baht = (n) =>
+          "฿" +
+          Number(n).toLocaleString("th-TH", {
+            minimumFractionDigits: n % 1 ? 2 : 0,
+          });
+      let timers = [],
+        oc = 1;
+      function toast(m, t = "ok") {
+        const d = document.createElement("div");
+        d.className = "toast t-" + t;
+        d.textContent = m;
+        $("#toasts").append(d);
+        setTimeout(() => d.remove(), 3200);
+      }
+      const go = (h) => (location.hash = h);
+      function auth() {
+        if (!S.user) {
+          toast("กรุณาเข้าสู่ระบบก่อน", "info");
+          go("#/login");
+          return false;
+        }
+        return true;
+      }
+      function card(g) {
+        return `<a class="game" href="#/game/${g.id}"><div class="cover" style="background:linear-gradient(160deg,${g.c[0]},${g.c[1]})">${g.e}${g.hot ? '<span class="badge b-hot">ยอดนิยม</span>' : g.new ? '<span class="badge b-sale">มาใหม่</span>' : ""}</div><div class="meta"><h4>${g.n}</h4><p>${g.u}</p><span class="btn btn-primary btn-sm block">เติมเลย</span></div></a>`;
+      }
+      function nav(r) {
+        $("#nav").innerHTML =
+          `<a class="logo" href="#/">TOPUP</a><nav class="links">${[
+            ["", "หน้าแรก"],
+            ["games", "เกมทั้งหมด"],
+            ["wallet", "เติมเงิน"],
+            ["profile/orders", "ประวัติ"],
+            ["help", "ติดต่อเรา"],
+          ]
+            .map(
+              (l) =>
+                `<a href="#/${l[0]}" class="${r == l[0].split("/")[0] ? "on" : ""}">${l[1]}</a>`,
+            )
+            .join("")}</nav>
+  <div class="search"><span>🔍</span><input id="nq" placeholder="ค้นหาเกม..." aria-label="ค้นหาเกม"></div>
+  <div style="margin-left:auto" class="row">${S.user ? `<a class="wallet" href="#/wallet">${baht(S.bal)}</a><div class="menu" id="menu"><button class="avatar" data-a="menu" aria-label="เมนูผู้ใช้">${S.user[0].toUpperCase()}</button><div class="dd"><a href="#/profile/info">โปรไฟล์</a><a href="#/profile/orders">ประวัติการสั่งซื้อ</a><button data-a="logout">ออกจากระบบ</button></div></div>` : `<a class="btn btn-outline btn-sm" href="#/login">เข้าสู่ระบบ</a><a class="btn btn-primary btn-sm" href="#/register">สมัครสมาชิก</a>`}</div>`;
+        $("#tabs").innerHTML = [
+          ["", "🏠", "หน้าแรก"],
+          ["games", "🔍", "ค้นหา"],
+          ["wallet", "💰", "เติมเงิน"],
+          [S.user ? "profile/info" : "login", "👤", "โปรไฟล์"],
+        ]
+          .map(
+            (t) =>
+              `<a href="#/${t[0]}" class="${r == t[0].split("/")[0] ? "on" : ""}"><span>${t[1]}</span>${t[2]}</a>`,
+          )
+          .join("");
+        const q = $("#nq");
+        q.onkeydown = (e) => {
+          if (e.key === "Enter") go("#/games/" + encodeURIComponent(q.value));
+        };
+      }
+      /* views */
+      const V = {};
+      V[""] = () => {
+        const sl = [
+          [
+            "เติมเกมไว ปลอดภัย 24 ชม.",
+            "เลือกเกม กรอก ID แล้วชำระเงิน ได้ของเข้าบัญชีภายใน 1–3 นาที",
+            "#7C3AED,#3B82F6",
+            "เลือกเกม",
+            "#/games",
+          ],
+          [
+            "สมัครใหม่ ลด 10%",
+            "ใช้โค้ด WELCOME10 ตอนชำระเงินครั้งแรก",
+            "#EC4899,#7C3AED",
+            "สมัครสมาชิก",
+            "#/register",
+          ],
+          [
+            "Valorant VP พร้อมส่ง",
+            "เติม VP ผ่าน Riot ID รับของทันที",
+            "#EF4444,#7C2D12",
+            "เติม Valorant",
+            "#/game/valorant",
+          ],
+        ];
+        return `<div class="hero" id="hero">${sl.map((s, i) => `<div class="slide ${i ? "" : "on"}" style="background:linear-gradient(120deg,${s[2]})"><h1>${s[0]}</h1><p>${s[1]}</p><div><a class="btn btn-buy" href="${s[4]}">${s[3]}</a></div></div>`).join("")}<div class="dots">${sl.map((_, i) => `<button data-a="slide" data-i="${i}" class="${i ? "" : "on"}" aria-label="สไลด์ ${i + 1}"></button>`).join("")}</div></div>
+<div class="search-big"><input class="input" id="hq" placeholder="ค้นหาเกม เช่น ROV, Free Fire"><button class="btn btn-primary" data-a="hsearch">ค้นหา</button></div>
+<div class="row" style="margin-top:14px">${CATS.map((c) => `<a class="chip ${c[0] == "all" ? "on" : ""}" href="#/games/~${c[0]}">${c[1]}</a>`).join("")}</div>
+<div class="ticker" id="tick"></div>
+<h2>เกมยอดนิยม</h2><div class="grid ggames">${G.filter((g) => g.hot)
+          .concat(G.filter((g) => !g.hot).slice(0, 3))
+          .map(card)
+          .join("")}</div>
+<h2>เกมมาใหม่</h2><div class="grid ggames">${G.filter((g) => g.new)
+          .map(card)
+          .join("")}</div>
+<h2>โปรโมชั่นพิเศษ</h2><div class="grid g3"><div class="panel"><span class="badge b-sale">ลด 10%</span><h3 style="margin:8px 0 4px">สมาชิกใหม่</h3><p class="muted sm">ใช้โค้ด WELCOME10 ลดทันที 10% ในการซื้อครั้งแรก</p></div><div class="panel"><span class="badge b-hot">ขายดี</span><h3 style="margin:8px 0 4px">แพ็กเกจใหญ่คุ้มกว่า</h3><p class="muted sm">เลือกแพ็กเกจที่มีป้ายลดราคา ประหยัดสูงสุด 7%</p></div><div class="panel"><span class="badge b-ok">เติมเงินเข้าระบบ</span><h3 style="margin:8px 0 4px">จ่ายผ่านเครดิต</h3><p class="muted sm">เติมครั้งเดียว ซื้อได้ทุกเกม ไม่ต้องสแกนซ้ำ</p></div></div>
+<div class="trust"><div>⚡ เติมไวใน 1–3 นาที</div><div>🔒 ปลอดภัย ไม่ขอรหัสผ่านเกม</div><div>🕒 บริการ 24 ชั่วโมง</div><div>💬 แอดมินตอบผ่าน LINE</div></div>`;
+      };
+      V.games = (a) => {
+        let q = a ? decodeURIComponent(a) : "",
+          cat = "all";
+        if (q[0] == "~") {
+          cat = q.slice(1);
+          q = "";
+        }
+        const list = () =>
+          G.filter(
+            (g) =>
+              (cat == "all" || g.cat == cat) &&
+              g.n.toLowerCase().includes(q.toLowerCase()),
+          );
+        S.gf = { q, cat, list };
+        const L = list();
+        return `<h1 style="margin-top:28px">เกมทั้งหมด</h1><div class="search-big"><input class="input" id="gq" value="${q.replace(/"/g, "&quot;")}" placeholder="ค้นหาเกม..." autocomplete="off"></div>
+<div class="row" style="margin-top:14px" id="gc">${CATS.map((c) => `<button class="chip ${cat == c[0] ? "on" : ""}" data-a="cat" data-c="${c[0]}">${c[1]}</button>`).join("")}<select class="input" id="gs" style="width:auto;margin-left:auto"><option value="">เรียงตาม: ยอดนิยม</option><option value="n">ใหม่สุด</option><option value="p">ราคาเริ่มต้นต่ำสุด</option></select></div>
+<p class="muted sm" id="gcount" style="margin:14px 0 10px">พบ ${L.length} เกม</p><div class="grid ggames" id="gg">${gridHTML(L)}</div>`;
+      };
+      function gridHTML(L) {
+        return L.length
+          ? L.map(card).join("")
+          : `<div class="panel empty" style="grid-column:1/-1"><b>ไม่พบเกมที่ค้นหา</b>ลองใช้ชื่ออื่น หรือเลือกหมวดหมู่ด้านบน</div>`;
+      }
+      function gfRefresh() {
+        const f = S.gf;
+        let L = f.list();
+        const s = $("#gs").value;
+        if (s == "n") L = L.slice().sort((a, b) => (b.new || 0) - (a.new || 0));
+        if (s == "p") L = L.slice().sort((a, b) => a.pk[0][1] - b.pk[0][1]);
+        $("#gg").innerHTML = gridHTML(L);
+        $("#gcount").textContent = "พบ " + L.length + " เกม";
+        document
+          .querySelectorAll("#gc .chip")
+          .forEach((c) => c.classList.toggle("on", c.dataset.c == f.cat));
+      }
+      V.game = (id) => {
+        const g = gid(id);
+        if (!g) return V.games();
+        S.gs = {
+          id,
+          pid: "",
+          ok: 0,
+          pk: null,
+          pay: "promptpay",
+          disc: 0,
+          sv: g.sv ? g.sv[0] : "",
+        };
+        return `<div class="gh" style="background:linear-gradient(120deg,${g.c[0]},${g.c[1]})"><div class="ic">${g.e}</div><div><h1>${g.n}</h1><p>เติม ${g.u} ได้ทันที ไม่ต้องใช้รหัสผ่านเกม</p></div></div>
+<div class="layout"><div>
+<div class="step"><i>1</i>กรอกข้อมูลบัญชีเกม</div><div class="panel">${g.sv ? `<div class="field"><label>${g.id == "mlbb" ? "Zone ID" : "เซิร์ฟเวอร์"}</label>${g.id == "mlbb" ? '<input class="input" id="sv" placeholder="เช่น 2345">' : `<select class="input" id="sv">${g.sv.map((s) => `<option>${s}</option>`).join("")}</select>`}</div>` : ""}<div class="field" style="margin:0"><label for="pid">${g.idl}</label><div class="row" style="flex-wrap:nowrap"><input class="input" id="pid" placeholder="กรอก ${g.idl}"><button class="btn btn-outline" style="white-space:nowrap" data-a="verify">ตรวจสอบ ID</button></div><span class="hint" id="vh">ตรวจสอบก่อนซื้อเพื่อกันเติมผิดบัญชี</span></div>${
+          S.ids.some((x) => x[0] == g.n)
+            ? `<div class="row" style="margin-top:10px"><span class="muted sm">ID ที่บันทึกไว้:</span>${S.ids
+                .filter((x) => x[0] == g.n)
+                .map(
+                  (x) =>
+                    `<button class="chip" data-a="useid" data-v="${x[1]}">${x[1]}</button>`,
+                )
+                .join("")}</div>`
+            : ""
+        }</div>
+<div class="step"><i>2</i>เลือกแพ็กเกจ</div><div class="pkgs">${g.pk.map((p, i) => `<button class="pkg" data-a="pkg" data-i="${i}">${p[2] ? '<span class="badge b-sale">ลดราคา</span>' : i == 1 ? '<span class="badge b-hot">ขายดี</span>' : ""}<div>${p[0]} ${g.u}</div><div class="p">${baht(p[1])}${p[2] ? `<s>${baht(p[2])}</s>` : ""}</div></button>`).join("")}</div>
+<div class="step"><i>3</i>เลือกช่องทางชำระเงิน</div><div class="pays">${PAY.map((p) => `<button class="pkg ${p[0] == "promptpay" ? "sel" : ""}" data-a="pay" data-p="${p[0]}">${p[2]} ${p[1]}${p[0] == "wallet" ? `<div class="muted sm" id="wb">คงเหลือ ${S.user ? baht(S.bal) : "– เข้าสู่ระบบก่อน"}</div>` : ""}</button>`).join("")}</div>
+<div class="step"><i>4</i>โค้ดส่วนลด (ถ้ามี)</div><div class="row" style="flex-wrap:nowrap"><input class="input" id="promo" placeholder="เช่น WELCOME10"><button class="btn btn-outline" data-a="promo">ใช้โค้ด</button></div>
+<div class="tabs" id="gt">${["วิธีเติม", "เงื่อนไข", "คำถามที่พบบ่อย"].map((t, i) => `<button data-a="gtab" data-i="${i}" class="${i ? "" : "on"}">${t}</button>`).join("")}</div><div id="gtc" class="muted">${gtab(0)}</div></div>
+<aside class="panel sum sticky"><h3>สรุปคำสั่งซื้อ</h3><div id="sm"></div></aside></div>`;
+      };
+      function gtab(i) {
+        return [
+          "1) กรอก ID แล้วกด “ตรวจสอบ ID”  2) เลือกแพ็กเกจ  3) ชำระเงิน แล้วรอรับของในเกม 1–3 นาที",
+          "เติมแล้วไม่สามารถยกเลิกหรือคืนเงินได้ กรุณาตรวจสอบ ID ให้ถูกต้องก่อนชำระเงิน",
+          "ไม่ได้รับของ? ส่งเลขที่คำสั่งซื้อให้แอดมินทาง LINE @topup",
+        ][i];
+      }
+      function gsum() {
+        const s = S.gs,
+          g = gid(s.id),
+          p = s.pk != null ? g.pk[s.pk] : null,
+          price = p ? p[1] : 0,
+          d = Math.round(price * s.disc * 100) / 100,
+          t = price - d;
+        s.total = t;
+        $("#sm").innerHTML =
+          `<dl><dt>เกม</dt><dd>${g.n}</dd><dt>${g.idl}</dt><dd>${s.pid || "–"}${s.ok ? " ✓" : ""}</dd><dt>แพ็กเกจ</dt><dd>${p ? p[0] + " " + g.u : "ยังไม่เลือก"}</dd><dt>ชำระด้วย</dt><dd>${PAY.find((x) => x[0] == s.pay)[1]}</dd>${d ? `<dt>ส่วนลด</dt><dd style="color:var(--success)">-${baht(d)}</dd>` : ""}</dl><div class="total"><span>ยอดชำระ</span><span>${baht(t)}</span></div><button class="btn btn-buy btn-lg" data-a="buy" ${p && s.ok ? "" : "disabled"}>ซื้อเลย</button><p class="hint" style="margin-top:8px">${!s.ok ? "ตรวจสอบ ID ก่อน" : !p ? "เลือกแพ็กเกจก่อน" : ""}</p>`;
+      }
+      V.login = () =>
+        `<div class="panel narrow"><h1>เข้าสู่ระบบ</h1><p class="muted" style="margin-bottom:18px">เข้าสู่ระบบเพื่อเติมเกมและดูประวัติ</p><div class="field"><label for="em">อีเมลหรือชื่อผู้ใช้</label><input class="input" id="em" autocomplete="username"></div><div class="field"><label for="pw">รหัสผ่าน</label><div class="row" style="flex-wrap:nowrap"><input class="input" id="pw" type="password" autocomplete="current-password"><button class="btn btn-outline btn-sm" data-a="eye" type="button">แสดง</button></div><span class="hint err" id="le"></span></div><div class="row between" style="margin-bottom:16px"><label class="sm muted"><input type="checkbox" checked> จดจำฉัน</label><a class="sm" style="color:var(--secondary)" href="#/forgot">ลืมรหัสผ่าน?</a></div><button class="btn btn-primary btn-lg" data-a="login">เข้าสู่ระบบ</button><div class="or">หรือ</div><div class="row" style="flex-wrap:nowrap"><button class="btn btn-outline block" data-a="social">Google</button><button class="btn btn-outline block" data-a="social">LINE</button></div><p class="center muted sm" style="margin-top:16px">ยังไม่มีบัญชี? <a style="color:var(--secondary)" href="#/register">สมัครสมาชิก</a></p></div>`;
+      V.register = () =>
+        `<div class="panel narrow"><h1>สมัครสมาชิก</h1><p class="muted" style="margin-bottom:18px">สมัครฟรี รับโค้ด WELCOME10</p>${[
+          ["ru", "ชื่อผู้ใช้", "text"],
+          ["re", "อีเมล", "email"],
+          ["rp", "เบอร์โทรศัพท์", "tel"],
+          ["rw", "รหัสผ่าน (อย่างน้อย 8 ตัว)", "password"],
+          ["rc", "ยืนยันรหัสผ่าน", "password"],
+        ]
+          .map(
+            (f) =>
+              `<div class="field"><label for="${f[0]}">${f[1]}</label><input class="input" id="${f[0]}" type="${f[2]}"></div>`,
+          )
+          .join(
+            "",
+          )}<label class="sm muted"><input type="checkbox" id="rt"> ฉันยอมรับข้อกำหนดการใช้งาน</label><p class="hint err" id="le" style="margin:8px 0"></p><button class="btn btn-primary btn-lg" data-a="register">สมัครสมาชิก</button><p class="center muted sm" style="margin-top:16px">มีบัญชีแล้ว? <a style="color:var(--secondary)" href="#/login">เข้าสู่ระบบ</a></p></div>`;
+      V.forgot = () =>
+        `<div class="panel narrow" id="fg"><h1>ลืมรหัสผ่าน</h1><p class="muted" style="margin-bottom:18px">กรอกอีเมล เราจะส่งลิงก์ตั้งรหัสผ่านใหม่ให้</p><div class="field"><label for="fe">อีเมล</label><input class="input" id="fe" type="email"></div><button class="btn btn-primary btn-lg" data-a="forgot">ส่งลิงก์</button><p class="center sm" style="margin-top:14px"><a style="color:var(--secondary)" href="#/login">กลับไปเข้าสู่ระบบ</a></p></div>`;
+      V.checkout = () => {
+        const c = S.cart;
+        if (!c) {
+          go("#/");
+          return "";
+        }
+        return `<div class="panel narrow center" id="co"><h1>ชำระเงิน</h1><p class="muted">คำสั่งซื้อ #${c.id}</p><div class="sum" style="text-align:left"><dl><dt>เกม</dt><dd>${c.g}</dd><dt>ID</dt><dd>${c.pid}</dd><dt>แพ็กเกจ</dt><dd>${c.p}</dd></dl></div><div class="total"><span>ยอดชำระ</span><span>${baht(c.t)}</span></div>${c.pay == "bank" ? `<p>โอนเข้าบัญชี ธนาคารตัวอย่าง 123-4-56789-0<br><span class="muted sm">ชื่อบัญชี บจก. ท็อปอัป (ตัวอย่าง)</span></p><div class="field" style="margin-top:12px;text-align:left"><label>แนบสลิปการโอน</label><input class="input" type="file" accept="image/*"></div>` : `<div class="qr">${Array.from({ length: 225 }, (_, i) => `<i class="${(i * 7 + Math.floor(i / 15) * 3) % 5 < 2 ? "" : "w"}"></i>`).join("")}</div><p class="muted sm">สแกนด้วยแอปธนาคารหรือ ${c.pay == "truemoney" ? "TrueMoney" : "PromptPay"}</p>`}<p style="margin:12px 0"><span class="badge b-wait" id="cs">รอชำระเงิน</span> หมดเวลาใน <b id="cd">15:00</b></p><button class="btn btn-buy btn-lg" data-a="paid">จำลองการชำระเงินสำเร็จ</button><button class="btn btn-ghost" data-a="cancel" style="margin-top:8px">ยกเลิกคำสั่งซื้อ</button></div>`;
+      };
+      function done(c) {
+        c.s = "ok";
+        S.orders.unshift({
+          id: c.id,
+          g: c.g,
+          p: c.p,
+          t: c.t,
+          s: "ok",
+          d: new Date().toLocaleDateString("en-GB"),
+        });
+        $("#app").innerHTML =
+          `<div class="panel narrow center"><div style="font-size:3rem">✅</div><h1>เติมเกมสำเร็จ</h1><p class="muted" style="margin:6px 0 16px">${c.p} เข้าบัญชี ${c.pid} แล้ว<br>เลขที่คำสั่งซื้อ #${c.id}</p><a class="btn btn-primary btn-lg" href="#/">กลับหน้าแรก</a><a class="btn btn-ghost" href="#/profile/orders">ดูประวัติ</a></div>`;
+        S.cart = null;
+      }
+      V.wallet = () => {
+        if (!S.user) {
+          setTimeout(auth);
+          return "";
+        }
+        return `<h1 style="margin-top:28px">เติมเงินเข้าระบบ</h1><div class="grid g3" style="margin-top:16px;align-items:start"><div class="panel"><p class="muted">ยอดคงเหลือ</p><div class="big" id="wbal">${baht(S.bal)}</div><div class="step" style="margin-top:18px">เลือกจำนวนเงิน</div><div class="row">${[50, 100, 300, 500, 1000].map((a) => `<button class="chip ${a == 300 ? "on" : ""}" data-a="amt" data-v="${a}">${baht(a)}</button>`).join("")}</div><div class="field" style="margin-top:12px"><label for="am">หรือกรอกจำนวนเอง</label><input class="input" id="am" type="number" min="20" value="300"></div></div>
+<div class="panel"><div class="step" style="margin-top:0">ช่องทางชำระเงิน</div><div class="field"><select class="input" id="wm"><option>PromptPay QR</option><option>TrueMoney Wallet</option><option>โอนผ่านธนาคาร</option><option>ซองอั่งเปา TrueMoney</option></select></div><div class="field"><label>แนบสลิป (กรณีโอนธนาคาร)</label><input class="input" type="file" accept="image/*"></div><button class="btn btn-primary btn-lg" data-a="topup">เติมเงินเข้าบัญชี</button><p class="hint" style="margin-top:8px">ต้นแบบนี้จะเพิ่มยอดทันทีเพื่อทดสอบ</p></div></div>
+<h2>ประวัติการเติมเงิน</h2><div class="panel scroll" id="th">${topTbl()}</div>`;
+      };
+      function topTbl() {
+        return `<table class="tbl"><tr><th>วันที่</th><th>จำนวน</th><th>ช่องทาง</th><th>สถานะ</th></tr>${S.tops.map((t) => `<tr><td>${t.d}</td><td>${baht(t.a)}</td><td>${t.m}</td><td><span class="badge b-ok">สำเร็จ</span></td></tr>`).join("")}</table>`;
+      }
+      const ST = {
+        ok: ["b-ok", "สำเร็จ"],
+        wait: ["b-wait", "รอดำเนินการ"],
+        fail: ["b-fail", "ยกเลิก"],
+      };
+      V.profile = (t) => {
+        if (!S.user) {
+          setTimeout(auth);
+          return "";
+        }
+        t = t || "info";
+        S.pf = t;
+        const T = [
+          ["info", "ข้อมูลส่วนตัว"],
+          ["pass", "เปลี่ยนรหัสผ่าน"],
+          ["orders", "ประวัติการสั่งซื้อ"],
+          ["tops", "ประวัติการเติมเงิน"],
+          ["ids", "ID เกมที่บันทึก"],
+        ];
+        const body = {
+          info: `<div class="field"><label>ชื่อผู้ใช้</label><input class="input" id="pn" value="${S.user}"></div><div class="field"><label>อีเมล</label><input class="input" value="${S.user}@example.com"></div><div class="field"><label>เบอร์โทรศัพท์</label><input class="input" value="08x-xxx-xxxx"></div><button class="btn btn-primary" data-a="psave">บันทึกข้อมูล</button>`,
+          pass: `<div class="field"><label>รหัสผ่านปัจจุบัน</label><input class="input" type="password"></div><div class="field"><label>รหัสผ่านใหม่</label><input class="input" type="password"></div><div class="field"><label>ยืนยันรหัสผ่านใหม่</label><input class="input" type="password"></div><button class="btn btn-primary" data-a="psave">เปลี่ยนรหัสผ่าน</button>`,
+          orders: S.orders.length
+            ? `<div class="scroll"><table class="tbl"><tr><th>เลขที่</th><th>เกม</th><th>แพ็กเกจ</th><th>ราคา</th><th>วันที่</th><th>สถานะ</th></tr>${S.orders.map((o) => `<tr><td>#${o.id}</td><td>${o.g}</td><td>${o.p}</td><td>${baht(o.t)}</td><td>${o.d}</td><td><span class="badge ${ST[o.s][0]}">${ST[o.s][1]}</span></td></tr>`).join("")}</table></div>`
+            : `<div class="empty"><b>ยังไม่มีคำสั่งซื้อ</b>เลือกเกมแล้วเริ่มเติมได้เลย</div>`,
+          tops: `<div class="scroll">${topTbl()}</div>`,
+          ids: `${S.ids.length ? S.ids.map((x, i) => `<div class="row between" style="padding:10px 0;border-bottom:1px solid var(--line)"><span><b>${x[0]}</b> <span class="muted">${x[1]}</span></span><button class="btn btn-ghost btn-sm" data-a="delid" data-i="${i}">ลบ</button></div>`).join("") : '<div class="empty"><b>ยังไม่มี ID ที่บันทึก</b></div>'}<div class="row" style="margin-top:14px;flex-wrap:nowrap"><select class="input" id="ng" style="width:auto">${G.map((g) => `<option>${g.n}</option>`).join("")}</select><input class="input" id="ni" placeholder="ID เกม"><button class="btn btn-primary" data-a="addid">เพิ่ม</button></div>`,
+        }[t];
+        return `<div class="panel row" style="margin-top:24px"><div class="avatar" style="width:56px;height:56px;font-size:1.4rem">${S.user[0].toUpperCase()}</div><div><h3>${S.user}</h3><span class="muted sm">${S.user}@example.com · สมาชิกระดับ Silver</span></div><div style="margin-left:auto;text-align:right"><span class="muted sm">เครดิตคงเหลือ</span><div class="big" style="font-size:1.4rem">${baht(S.bal)}</div></div></div><div class="tabs">${T.map((x) => `<a href="#/profile/${x[0]}"><button class="${t == x[0] ? "on" : ""}" tabindex="-1">${x[1]}</button></a>`).join("")}</div><div class="panel">${body}</div>`;
+      };
+      V.help = () =>
+        `<h1 style="margin-top:28px">ติดต่อเรา</h1><div class="grid g3" style="margin-top:16px;align-items:start"><div><h2 style="margin-top:0">คำถามที่พบบ่อย</h2>${[
+          [
+            "เติมแล้วนานแค่ไหนถึงได้ของ?",
+            "ปกติ 1–3 นาที หากเกิน 15 นาที ติดต่อแอดมินพร้อมเลขที่คำสั่งซื้อ",
+          ],
+          [
+            "กรอก ID ผิดทำอย่างไร?",
+            "แจ้งแอดมินทันที แต่เมื่อเติมสำเร็จแล้วไม่สามารถคืนเงินได้",
+          ],
+          ["ต้องให้รหัสผ่านเกมไหม?", "ไม่ต้อง เราใช้เพียง ID ของเกมเท่านั้น"],
+          [
+            "ชำระเงินได้ช่องทางใดบ้าง?",
+            "PromptPay QR, TrueMoney Wallet, โอนธนาคาร และเครดิตในเว็บ",
+          ],
+        ]
+          .map(
+            (f) =>
+              `<details><summary>${f[0]}</summary><p>${f[1]}</p></details>`,
+          )
+          .join(
+            "",
+          )}</div><div class="panel"><h3 style="margin-bottom:12px">ส่งข้อความหาเรา</h3><div class="field"><label>ชื่อ</label><input class="input"></div><div class="field"><label>อีเมล</label><input class="input" type="email"></div><div class="field"><label>ข้อความ</label><textarea class="input" rows="4"></textarea></div><button class="btn btn-primary block" data-a="msg">ส่งข้อความ</button><div class="row" style="margin-top:14px"><a class="btn btn-outline btn-sm" href="#">LINE @topup</a><a class="btn btn-outline btn-sm" href="#">Facebook</a></div></div></div>`;
+      /* router */
+      function render() {
+        timers.forEach(clearInterval);
+        timers = [];
+        const h = location.hash.replace(/^#\//, ""),
+          [r, ...rest] = h.split("/"),
+          a = rest.join("/");
+        nav(r);
+        $("#app").innerHTML = (V[r] || V[""])(a);
+        window.scrollTo(0, 0);
+        if (r == "") {
+          const sl = document.querySelectorAll(".slide"),
+            dt = document.querySelectorAll(".dots button");
+          let i = 0;
+          const sh = (n) => {
+            i = n;
+            sl.forEach((s, k) => s.classList.toggle("on", k == n));
+            dt.forEach((s, k) => s.classList.toggle("on", k == n));
+          };
+          S.sh = sh;
+          timers.push(setInterval(() => sh((i + 1) % sl.length), 4500));
+          const names = ["A***n", "P***t", "N***a", "K***y", "S***k"],
+            T = () => {
+              const g = G[(Math.random() * G.length) | 0],
+                p = g.pk[(Math.random() * g.pk.length) | 0];
+              return `<b>●</b> คุณ ${names[(Math.random() * 5) | 0]} เติม ${g.n} ${p[0]} ${g.u} (${baht(p[1])}) เมื่อ ${(1 + Math.random() * 4) | 0} นาทีที่แล้ว`;
+            };
+          $("#tick").innerHTML = T();
+          timers.push(setInterval(() => ($("#tick").innerHTML = T()), 3000));
+        }
+        if (r == "game") gsum();
+        if (r == "games") {
+          $("#gq").oninput = (e) => {
+            S.gf.q = e.target.value;
+            gfRefresh();
+          };
+          $("#gs").onchange = gfRefresh;
+        }
+        if (r == "checkout" && S.cart) {
+          let t = 900;
+          timers.push(
+            setInterval(() => {
+              t--;
+              const e = $("#cd");
+              if (!e) return;
+              e.textContent =
+                String((t / 60) | 0).padStart(2, "0") +
+                ":" +
+                String(t % 60).padStart(2, "0");
+              if (t <= 0) {
+                clearInterval(timers[0]);
+                $("#cs").className = "badge b-fail";
+                $("#cs").textContent = "หมดเวลา";
+              }
+            }, 1000),
+          );
+        }
+      }
+      addEventListener("hashchange", render);
+      document.addEventListener("click", (e) => {
+        const m = $("#menu");
+        if (m && !e.target.closest("#menu")) m.classList.remove("open");
+        const b = e.target.closest("[data-a]");
+        if (!b) return;
+        const a = b.dataset.a,
+          s = S.gs,
+          d = b.dataset;
+        const A = {
+          menu: () => $("#menu").classList.toggle("open"),
+          logout: () => {
+            S.user = null;
+            toast("ออกจากระบบแล้ว", "info");
+            go("#/");
+          },
+          slide: () => S.sh(+d.i),
+          hsearch: () => go("#/games/" + encodeURIComponent($("#hq").value)),
+          cat: () => {
+            S.gf.cat = d.c;
+            gfRefresh();
+          },
+          eye: () => {
+            const p = $("#pw");
+            p.type = p.type == "password" ? "text" : "password";
+            b.textContent = p.type == "password" ? "แสดง" : "ซ่อน";
+          },
+          login: () => {
+            const u = $("#em").value.trim(),
+              p = $("#pw").value;
+            if (!u || p.length < 4) {
+              $("#le").textContent = !u
+                ? "กรอกอีเมลหรือชื่อผู้ใช้"
+                : "รหัสผ่านต้องมีอย่างน้อย 4 ตัวอักษร (ต้นแบบ)";
+              return;
+            }
+            S.user = u.split("@")[0];
+            toast("ยินดีต้อนรับ " + S.user);
+            go("#/");
+          },
+          social: () => {
+            S.user = "gamer01";
+            toast("เข้าสู่ระบบสำเร็จ");
+            go("#/");
+          },
+          register: () => {
+            const v = (i) => $("#" + i).value.trim(),
+              e = $("#le");
+            if (!v("ru") || !v("re").includes("@") || v("rp").length < 9)
+              return (e.textContent = "กรอกชื่อผู้ใช้ อีเมล และเบอร์โทรให้ครบ");
+            if (v("rw").length < 8)
+              return (e.textContent = "รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร");
+            if (v("rw") != v("rc"))
+              return (e.textContent = "รหัสผ่านทั้งสองช่องไม่ตรงกัน");
+            if (!$("#rt").checked)
+              return (e.textContent = "ต้องยอมรับข้อกำหนดการใช้งานก่อน");
+            S.user = v("ru");
+            toast("สมัครสมาชิกสำเร็จ ใช้โค้ด WELCOME10 ได้เลย");
+            go("#/");
+          },
+          forgot: () => {
+            if (!$("#fe").value.includes("@"))
+              return toast("กรอกอีเมลให้ถูกต้อง", "err");
+            $("#fg").innerHTML =
+              '<div class="center"><div style="font-size:3rem">📧</div><h1>ส่งลิงก์แล้ว</h1><p class="muted" style="margin:8px 0 16px">ตรวจสอบกล่องจดหมายของคุณ</p><a class="btn btn-primary" href="#/login">กลับไปเข้าสู่ระบบ</a></div>';
+          },
+          verify: () => {
+            const p = $("#pid").value.trim(),
+              h = $("#vh"),
+              g = gid(s.id);
+            if (g.sv && g.id == "mlbb" && !$("#sv").value.trim()) {
+              h.className = "hint err";
+              h.textContent = "กรอก Zone ID ก่อน";
+              return;
+            }
+            if (p.length < 4) {
+              h.className = "hint err";
+              h.textContent = "ไม่พบ ID นี้ ตรวจสอบตัวเลขแล้วลองใหม่";
+              s.ok = 0;
+              gsum();
+              return;
+            }
+            h.className = "hint";
+            h.textContent = "กำลังตรวจสอบ...";
+            setTimeout(() => {
+              s.pid = p;
+              s.ok = 1;
+              h.className = "hint ok";
+              h.textContent = "พบบัญชี: NightFox" + p.slice(-2);
+              gsum();
+            }, 600);
+          },
+          useid: () => {
+            $("#pid").value = d.v;
+            A.verify();
+          },
+          pkg: () => {
+            s.pk = +d.i;
+            document
+              .querySelectorAll("[data-a=pkg]")
+              .forEach((x) => x.classList.toggle("sel", x == b));
+            gsum();
+          },
+          pay: () => {
+            s.pay = d.p;
+            document
+              .querySelectorAll("[data-a=pay]")
+              .forEach((x) => x.classList.toggle("sel", x == b));
+            gsum();
+          },
+          promo: () => {
+            if ($("#promo").value.trim().toUpperCase() == "WELCOME10") {
+              s.disc = 0.1;
+              toast("ใช้โค้ดสำเร็จ ลด 10%");
+            } else {
+              s.disc = 0;
+              toast("โค้ดไม่ถูกต้องหรือหมดอายุ", "err");
+            }
+            gsum();
+          },
+          gtab: () => {
+            document
+              .querySelectorAll("#gt button")
+              .forEach((x) => x.classList.toggle("on", x == b));
+            $("#gtc").textContent = gtab(+d.i);
+          },
+          buy: () => {
+            if (!auth()) return;
+            const g = gid(s.id),
+              p = g.pk[s.pk],
+              c = {
+                id: "A" + (10242 + oc++),
+                g: g.n,
+                pid: s.pid,
+                p: p[0] + " " + g.u,
+                t: s.total,
+                pay: s.pay,
+              };
+            if (s.pay == "wallet") {
+              if (S.bal < c.t) {
+                toast(
+                  "เครดิตไม่พอ ขาดอีก " +
+                    baht(c.t - S.bal) +
+                    " กรุณาเติมเงินก่อน",
+                  "err",
+                );
+                return;
+              }
+              S.bal -= c.t;
+              S.cart = c;
+              done(c);
+              nav("checkout");
+            } else {
+              S.cart = c;
+              go("#/checkout");
+            }
+          },
+          paid: () => {
+            done(S.cart);
+            nav("checkout");
+          },
+          cancel: () => {
+            S.orders.unshift({
+              id: S.cart.id,
+              g: S.cart.g,
+              p: S.cart.p,
+              t: S.cart.t,
+              s: "fail",
+              d: new Date().toLocaleDateString("en-GB"),
+            });
+            S.cart = null;
+            toast("ยกเลิกคำสั่งซื้อแล้ว", "info");
+            go("#/");
+          },
+          amt: () => {
+            $("#am").value = d.v;
+            document
+              .querySelectorAll("[data-a=amt]")
+              .forEach((x) => x.classList.toggle("on", x == b));
+          },
+          topup: () => {
+            const v = +$("#am").value;
+            if (!(v >= 20)) return toast("เติมขั้นต่ำ ฿20", "err");
+            S.bal += v;
+            S.tops.unshift({
+              d: new Date().toLocaleDateString("en-GB"),
+              a: v,
+              m: $("#wm").value,
+              s: "ok",
+            });
+            $("#wbal").textContent = baht(S.bal);
+            $("#th").innerHTML = topTbl();
+            nav("wallet");
+            toast("เติมเงิน " + baht(v) + " สำเร็จ");
+          },
+          psave: () => toast("บันทึกแล้ว"),
+          addid: () => {
+            const v = $("#ni").value.trim();
+            if (!v) return toast("กรอก ID เกมก่อน", "err");
+            S.ids.push([$("#ng").value, v]);
+            render();
+          },
+          delid: () => {
+            S.ids.splice(+d.i, 1);
+            render();
+          },
+          msg: () => toast("ส่งข้อความแล้ว เราจะตอบกลับภายใน 24 ชม."),
+        };
+        A[a] && A[a]();
+      });
+      render();
+    </script>
+  </body>
+</html>
